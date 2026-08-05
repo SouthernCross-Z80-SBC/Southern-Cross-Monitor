@@ -20,6 +20,6 @@ System calls remain identical to all previous monitor releases, some additional 
 Some improvements to the way  restart vectors and interrupts are handled.
 
 ## Optimizations & Bug Fixes
+
 PRINTSZ prints the terminating zero. Fixed.
 PRINTSZ renamed as ILPSZ (In-Line Print String Zero terminated)
-
