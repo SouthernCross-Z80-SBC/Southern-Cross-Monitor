@@ -73,7 +73,6 @@ Command input is case-insensitive. Hexadecimal inputs accept characters `0`–`9
 - **Syntax:** `G AAAA<CR>`
 
 - **Description:** Transfers CPU execution directly to memory address `AAAA`.
-  Use the `G` instruction to start a single stepping session.
 
 ### `R` — Display Registers
 
