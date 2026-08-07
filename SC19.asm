@@ -143,6 +143,7 @@ RAMSUM  .DS   1   ;user ram checksum
 SWATCH  .DS   1   ;smartwatch access and ram test location
 SYSERR  .DS   2   ;system call error jump
 BRKADD  .DS   2   ;break address
+JMPHL   .DS   1   ; JP (HL)
 ;----------------
 ; RESTART VECTORS
 ;----------------

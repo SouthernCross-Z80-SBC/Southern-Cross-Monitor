@@ -163,7 +163,9 @@ GOJMP1  CALL  RXDATA
         JR    NZ,GOJMP1      ;Z=0 no, keep waiting
         CALL  TXCRLF
         LD    HL,(ADDR)
-        JP    (HL)           ;jump to user address
+        LD    A,0E9H         ; put the JMP (HL)
+        LD    (JMPHL),A      ;instruction in RAM
+        JP    JMPHL          ;and JP to it
 ;---------------
 ; OUTPUT A SPACE
 ;---------------

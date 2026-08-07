@@ -130,6 +130,8 @@ RST66   .DS   2   ;nmi interrupt jump
 RAMSUM  .DS   1   ;user ram checksum
 SWATCH  .DS   1   ;ram test location
 SYSERR  .DS   2   ;system call error jump
+BRKADD  .DS   2   ;break address
+JMPHL   .DS   1   ; JP (HL)
 ;--------------------
 ; SYSTEM CALL NUMBERS
 ;--------------------
@@ -138,11 +140,11 @@ SYSERR  .DS   2   ;system call error jump
 ;  RST  30H
 ;
 MAIN           .EQU  0       ;restart monitor
-VERS           .EQU  1 ;return software version number
-DISADD         .EQU  2 ;covert address to seven segment code in display buffer
-DISBYT         .EQU  3 ;convert data to seven segment code in display buffer
-CLRBUF         .EQU  4 ;clear the seven segment display buffer
-SCAND          .EQU  5 ;scan the seven segment displays
+VERS           .EQU  1       ;return software version number
+DISADD         .EQU  2       ;covert address to seven segment code in display buffer
+DISBYT         .EQU  3       ;convert data to seven segment code in display buffer
+CLRBUF         .EQU  4       ;clear the seven segment display buffer
+SCAND          .EQU  5       ;scan the seven segment displays
 CONBYT         .EQU  6 ;convert a byte into seven segment code
 CONVHI         .EQU  7 ;convert the high nibble into seven segment code
 ;
