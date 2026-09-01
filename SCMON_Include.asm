@@ -4,12 +4,12 @@
 ;
 ;  MONITOR HEADER FILE
 ;
-;  #INCLUDE  "SC19_Include.asm"
+;  #INCLUDE  "SC191_Include.asm"
 ;
 ; Written by Craig R. S. Jones
 ; Melbourne, Australia.
 ;
-; VERSION     1.9  August 2026
+; VERSION     1.91  Sept 2026
 ;
 ;---------------
 ; RAM MEMORY MAP
@@ -130,6 +130,8 @@ RST66   .DS   2   ;nmi interrupt jump
 RAMSUM  .DS   1   ;user ram checksum
 SWATCH  .DS   1   ;ram test location
 SYSERR  .DS   2   ;system call error jump
+BRKADD  .DS   2   ;break address
+JMPHL   .DS   1   ; JP (HL)
 ;--------------------
 ; SYSTEM CALL NUMBERS
 ;--------------------
@@ -138,60 +140,65 @@ SYSERR  .DS   2   ;system call error jump
 ;  RST  30H
 ;
 MAIN           .EQU  0       ;restart monitor
-VERS           .EQU  1 ;return software version number
-DISADD         .EQU  2 ;covert address to seven segment code in display buffer
-DISBYT         .EQU  3 ;convert data to seven segment code in display buffer
-CLRBUF         .EQU  4 ;clear the seven segment display buffer
-SCAND          .EQU  5 ;scan the seven segment displays
-CONBYT         .EQU  6 ;convert a byte into seven segment code
-CONVHI         .EQU  7 ;convert the high nibble into seven segment code
+VERS           .EQU  1       ;return software version number
+DISADD         .EQU  2       ;covert address to seven segment code in display buffer
+DISBYT         .EQU  3       ;convert data to seven segment code in display buffer
+CLRBUF         .EQU  4       ;clear the seven segment display buffer
+SCAND          .EQU  5       ;scan the seven segment displays
+VERS           .EQU  1       ;return software version number
+DISADD         .EQU  2       ;covert address to seven segment code in display buffer
+DISBYT         .EQU  3       ;convert data to seven segment code in display buffer
+CLRBUF         .EQU  4       ;clear the seven segment display buffer
+SCAND          .EQU  5       ;scan the seven segment displays
+CONBYT         .EQU  6       ;convert a byte into seven segment code
+CONVHI         .EQU  7       ;convert the high nibble into seven segment code
 ;
-CONVLO         .EQU  8 ;convert the low nibble into seven segment code
-SKEYIN         .EQU  9 ;scan the display until key press
-SKEYRL         .EQU  10 ;scan the display until key release
-KEYIN          .EQU  11 ;wait for a key press
-KEYREL         .EQU  12 ;wait for key release
-MENU           .EQU  13 ;menu handler
-CHKSUM         .EQU  14 ;calculate 8 bit checksum
-MUL16          .EQU  15 ;16 bit multiply
+CONVLO         .EQU  8       ;convert the low nibble into seven segment code
+SKEYIN         .EQU  9       ;scan the display until key press
+SKEYRL         .EQU  10      ;scan the display until key release
+KEYIN          .EQU  11      ;wait for a key press
+KEYREL         .EQU  12      ;wait for key release
+MENU           .EQU  13      ;menu handler
+CHKSUM         .EQU  14      ;calculate 8 bit checksum
+MUL16          .EQU  15      ;16 bit multiply
 ;
-RAND           .EQU  16 ;random number generator
-INDEXB         .EQU  17 ;8 bit index look up table to an 8 bit byte
-INDEXW         .EQU  18 ;8 bit index look up table to a 16 bit word
-MUSIC          .EQU  19 ;music sequencer
-TONE           .EQU  20 ;output a tone
-BEEP           .EQU  21 ;key entry beep
-SKATE          .EQU  22 ;scan 8x8 display
-TXDATA         .EQU  23 ;serial bit bang transmit
+RAND           .EQU  16      ;random number generator
+INDEXB         .EQU  17      ;8 bit index look up table to an 8 bit byte
+INDEXW         .EQU  18      ;8 bit index look up table to a 16 bit word
+MUSIC          .EQU  19      ;music sequencer
+TONE           .EQU  20      ;output a tone
+BEEP           .EQU  21      ;key entry beep
+SKATE          .EQU  22      ;scan 8x8 display
+TXDATA         .EQU  23      ;serial bit bang transmit
 ;
-RXDATA         .EQU  24 ;serial bit bang receive
-ASCHEX         .EQU  25 ;convert ASCII character to hexadecimal
-WWATCH         .EQU  26 ;write to smartwatch
-RWATCH         .EQU  27 ;read from smartwatch
-ONESEC         .EQU  28 ;smartwatch one second delay 40
-RLSTEP         .EQU  29 ;relay board sequencer
-DELONE         .EQU  30 ;one second delay
-SCANKEY        .EQU  31 ;scan the keyboard for a key press
+RXDATA         .EQU  24      ;serial bit bang receive
+ASCHEX         .EQU  25      ;convert ASCII character to hexadecimal
+WWATCH         .EQU  26      ;write to smartwatch
+RWATCH         .EQU  27      ;read from smartwatch
+ONESEC         .EQU  28      ;smartwatch one second delay 40
+RLSTEP         .EQU  29      ;relay board sequencer
+DELONE         .EQU  30      ;one second delay
+SCANKEY        .EQU  31      ;scan the keyboard for a key press
 ;
-INTELH         .EQU  32 ;receive INTEL hex file
-SPLIT          .EQU  33 ;separate a byte into two right justidied nibbles
-SNDMSG         .EQU  34 ;send a zero terminated string
-BITASC         .EQU  35 ;convert a byte to an ASCII string as bits
-WRDASC         .EQU  36 ;convert a word to ASCII
-BYTASC         .EQU  37 ;convert a byte to ASCII
-NYBASC         .EQU  38 ;convert a nibble to ASCII
-PCBTYP         .EQU  39 ;return PCB type SC
+INTELH         .EQU  32      ;receive INTEL hex file
+SPLIT          .EQU  33      ;separate a byte into two right justified nibbles
+SNDMSG         .EQU  34      ;send a zero terminated string
+BITASC         .EQU  35      ;convert a byte to an ASCII string as bits
+WRDASC         .EQU  36      ;convert a word to ASCII
+BYTASC         .EQU  37      ;convert a byte to ASCII
+NYBASC         .EQU  38      ;convert a nibble to ASCII
+PCBTYP         .EQU  39      ;return PCB type SC
 ;
-ILPSZ          .EQU  40 ;in-line print string
-KBDTYP         .EQU  41 ;return keyboard type 74c923 or software scanned
-UPDATE         .EQU  42 ;update the display buffer
-VARRAM         .EQU  43 ;return variable base address
-SERINI         .EQU  44 ;initialise bit bang serial
-SCBUG          .EQU  45 ;serial monitor  entry point
-MSDELAY        .EQU  46 ;millisecond delay
-ESCMORE        .EQU  47 ;list more or escape
-ASC2HEX        .EQU  48 ;convert ASCII to hexadecimal
-INSBUF         .EQU  49 ;put a char into a buffer
-SPCBUF         .EQU  50 ;put a space into a buffer
-BCRLF          .EQU  51 ;put a CR LF into a buffer
+ILPSZ          .EQU  40      ;in-line print string
+KBDTYP         .EQU  41      ;return keyboard type 74c923 or software scanned
+UPDATE         .EQU  42      ;update the display buffer
+VARRAM         .EQU  43      ;return variable base address
+SERINI         .EQU  44      ;initialise bit bang serial
+SCBUG          .EQU  45      ;serial monitor  entry point
+MSDELAY        .EQU  46      ;millisecond delay
+ESCMORE        .EQU  47      ;list more or escape
+ASC2HEX        .EQU  48      ;convert ASCII to hexadecimal
+INSBUF         .EQU  49      ;put a char into a buffer
+SPCBUF         .EQU  50      ;put a space into a buffer
+BCRLF          .EQU  51      ;put a CR LF into a buffer
 ;END OF INCLUDE FILE

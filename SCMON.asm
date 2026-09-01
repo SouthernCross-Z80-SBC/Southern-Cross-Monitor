@@ -14,6 +14,7 @@
 ;         1.7  November 2022
 ;         1.8  March 2023
 ;         1.9  August 2026
+;         1.91 September 2026
 ;
 ; 16 bit multiply from Zaks 'Programming the Z80'
 ; Music and sound code from
@@ -143,6 +144,7 @@ RAMSUM  .DS   1   ;user ram checksum
 SWATCH  .DS   1   ;smartwatch access and ram test location
 SYSERR  .DS   2   ;system call error jump
 BRKADD  .DS   2   ;break address
+JMPHL   .DS   1   ; JP (HL)
 ;----------------
 ; RESTART VECTORS
 ;----------------
