@@ -1,4 +1,4 @@
-# Southern Cross Monitor Version 1.9
+# Southern Cross Monitor
 
 - [SCBUG Serial Monitor ](SCBUG_Serial_Monitor.md)
 
